@@ -5,11 +5,12 @@ import plugin from './mongoose-transform';
 const SALT_WORK_FACTOR = 10;
 
 let Schema = new mongoose.Schema({
-    username : { type: String, required: true, index: { unique: true } },
+    //username : { type: String, index: { unique: true } },
     name:{type: String},
     password : { type : String, select: false , required : true, hide: true},
     passwordResetToken : { type : String },
 	email : { 
+        index: { unique: true },        
         type : String, 
         default : "" ,
         validate : { 
