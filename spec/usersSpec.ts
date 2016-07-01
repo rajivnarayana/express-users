@@ -19,7 +19,7 @@ describe("Login", () => {
     var refreshTokenExpiresIn;
     
     
-    it("Sign up First time", async (done) => {
+    xit("Sign up First time", async (done) => {
         let { response, body} = await post('/users/signup', {form: {username: 'john', password: 'hello123'}});
         expect(response.statusCode).toBe(200);
         let json = JSON.parse(body);
@@ -29,13 +29,13 @@ describe("Login", () => {
         done();
     })
     
-    it('Sign up second time as same user should error out', async (done) => {
+    xit('Sign up second time as same user should error out', async (done) => {
         let { response, body} = await post('/users/signup', {form: {username: 'john', password: 'hello123'}});
         expect(response.statusCode).toBe(500);
         done();
     })
     
-    it('Accessing /me should show my name', async (done) => {
+    xit('Accessing /me should show my name', async (done) => {
         let { response, body } = await get('/users/me?access_token='+accessToken);
         expect(response.statusCode).toBe(200);
         let user = JSON.parse(body);
@@ -43,7 +43,7 @@ describe("Login", () => {
         done();
     })
     
-    it('Login should generate a new access token and refresh token', async (done) => {
+    xit('Login should generate a new access token and refresh token', async (done) => {
         let { response, body} = await post('/users/login', {form: {username: 'john', password: 'hello123'}});
         let json = JSON.parse(body);
         expect(response.statusCode).toBe(200);
@@ -56,7 +56,7 @@ describe("Login", () => {
         done();
     })
     
-    it('Accessing /me with new token should show my name', async (done) => {
+    xit('Accessing /me with new token should show my name', async (done) => {
         let { response, body } = await get('/users/me?access_token='+accessToken);
         expect(response.statusCode).toBe(200);
         let user = JSON.parse(body);
@@ -64,6 +64,39 @@ describe("Login", () => {
         done();
     })
     
+    
+    xit('Accessing /me after refreshing token should show my name', async (done) => {
+        let { response, body } = await get('/users/me?access_token='+accessToken);
+        expect(response.statusCode).toBe(200);
+        let user = JSON.parse(body);
+        expect(user.username).toBe('john');
+        done();
+    })  
+
+    it("Sign up with email for the first time", async (done) => {
+        let { response, body} = await post('/users/email_signup', {form: {email: 'john@webileapps.com', password: 'hello123'}});
+        expect(response.statusCode).toBe(200);
+        let json = JSON.parse(body);
+        accessToken = json.access_token;
+        refreshToken = json.refresh_token;
+        refreshTokenExpiresIn = json.refresh_token_expires_in;
+        done();
+    })
+    
+    it('Sign up second time as same user should error out', async (done) => {
+        let { response, body} = await post('/users/email_signup', {form: {email: 'john@webileapps.com', password: 'hello123'}});
+        expect(response.statusCode).toBe(500);
+        done();
+    })    
+
+    it('Accessing /me should show my name', async (done) => {
+        let { response, body } = await get('/users/me?access_token=' + accessToken);
+        expect(response.statusCode).toBe(200);
+        let user = JSON.parse(body);
+        expect(user.email).toBe('john@webileapps.com');
+        done();
+    })    
+
     it('Login should generate a new access token and refresh token', async (done) => {
         let { response, body} = await post('/users/token', {form: {refresh_token: refreshToken}});
         let json = JSON.parse(body);
@@ -72,12 +105,20 @@ describe("Login", () => {
         accessToken = json.access_token;
         done();
     });
-    
-    it('Accessing /me after refreshing token should show my name', async (done) => {
-        let { response, body } = await get('/users/me?access_token='+accessToken);
+
+    it('Accessing /me with new token should show my name', async (done) => {
+        let { response, body } = await get('/users/me?access_token=' + accessToken);
         expect(response.statusCode).toBe(200);
         let user = JSON.parse(body);
-        expect(user.username).toBe('john');
+        expect(user.email).toBe('john@webileapps.com');
+        done();
+    })  
+
+    it('Accessing /me after refreshing token should show my name', async (done) => {
+        let { response, body } = await get('/users/me?access_token=' + accessToken);
+        expect(response.statusCode).toBe(200);
+        let user = JSON.parse(body);
+        expect(user.email).toBe('john@webileapps.com');
         done();
     })   
 })

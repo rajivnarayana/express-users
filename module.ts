@@ -51,6 +51,15 @@ export async function signup(username: string, password: string) : Promise<any> 
     return await sign(user.id);        
 }
 
+export async function signupWithEmail(email: string, password: string) : Promise<any> {
+    if (!email || !password) {
+        throw new Error('Email and password required to signup');
+    }
+
+    let user: Document = await UserSchema.create({email: email, password: password});
+    return await sign(user.id);        
+}
+
 export async function login(username: string, password: string) : Promise<any> {
     let userId = await loginWithoutSign(username, password);
     return await sign(userId);
