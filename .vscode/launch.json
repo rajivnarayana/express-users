@@ -26,10 +26,10 @@
             "name": "Test",
             "type": "node",
             "request": "launch",
-			"program": "${workspaceRoot}/node_modules/jasmine/bin/jasmine.js",
+			"program": "${workspaceRoot}/express-sample/node_modules/jasmine/bin/jasmine.js",
             "stopOnEntry": false,
             "args": [],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/express-sample",
             "preLaunchTask": null,
             "runtimeExecutable": null,
             "runtimeArgs": [

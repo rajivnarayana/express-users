@@ -1,10 +1,10 @@
 import * as mongoose from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate';
 import bcrypt = require('bcrypt');
-import plugin from './mongoose-transform';
+// import plugin from './mongoose-transform';
 const SALT_WORK_FACTOR = 10;
 
-let Schema = new mongoose.Schema({
+let Schema_ = new mongoose.Schema({
     //username : { type: String, index: { unique: true } },
     name:{type: String},
     password : { type : String, select: false , required : true, hide: true},
@@ -27,7 +27,7 @@ let Schema = new mongoose.Schema({
 })
 
 
-Schema.pre('save', function(next) {
+Schema_.pre('save', function(next) {
     var user = this;
 
     // only hash the password if it has been modified (or is new)
@@ -53,7 +53,7 @@ Schema.pre('save', function(next) {
 // UserSchema.findOne('...id...', '+password', function(err, user) {
 //      user.comparePassword('password from req', 'hased password from doc', callback);
 // })
-Schema.method('comparePassword', function(candidatePassword) : Promise<boolean> {
+Schema_.method('comparePassword', function(candidatePassword) : Promise<boolean> {
     let password = this.password;
     return new Promise((resolve, reject) => {
         bcrypt.compare(candidatePassword, password, function(err, isMatch) {
@@ -63,7 +63,6 @@ Schema.method('comparePassword', function(candidatePassword) : Promise<boolean> 
     })
 });
 
-Schema.plugin(plugin);
-Schema.plugin(mongoosePaginate);
+Schema_.plugin(mongoosePaginate);
 
-export var UserSchema = mongoose.model('User', Schema);
+export var Schema = Schema_;
