@@ -29,11 +29,11 @@ export function init(options) {
     if (options.plugins) {
         options.plugins.forEach((plugin) => {
             UserSchema.plugin(plugin);
-            UserModel = mongoose.model('User', UserSchema);
+            UsersModel = mongoose.model('User', UserSchema);
         })
     }
 }
 
-export var UserModel = mongoose.model('User', UserSchema);
+export var UsersModel = mongoose.model('User', UserSchema);
 
 export default router;
