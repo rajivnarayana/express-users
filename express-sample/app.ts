@@ -4,10 +4,10 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var transformPlugin = require("./mongoose-transform");
 
-mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/rufio-test');
+mongoose.connect(process.env.MONGO_URL);
 
-var usersRouter = require('../');
-usersRouter.init({url : process.env.MONGO_URL || 'mongodb://localhost/rufio-test', plugins : [transformPlugin.default]});
-app.use(usersRouter.authenticate);
-app.use('/users', usersRouter.default);
+var usersModule = require('users');
+usersModule.init({plugins : [transformPlugin.default]});
+app.use(usersModule.authenticate);
+app.use('/users', usersModule.default);
 module.exports = app;

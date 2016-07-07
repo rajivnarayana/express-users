@@ -25,7 +25,7 @@ export async function authenticate (req, res, next) {
 export * from './module';
 
 export function init(options) {
-    mongoose.connect(options.url);
+    // mongoose.connect(options.url);
     if (options.plugins) {
         options.plugins.forEach((plugin) => {
             UserSchema.plugin(plugin);
