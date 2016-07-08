@@ -1,4 +1,4 @@
-import { UserModel as UserSchema } from "./index";
+import { UsersModel as UserSchema } from "./index";
 import { RefreshTokenSchema } from "./refresh-token-model";
 import { sign as jwtSign, verify as jwtVerify } from 'jsonwebtoken';
 import { Document, Types } from 'mongoose';

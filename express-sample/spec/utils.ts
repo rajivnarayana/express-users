@@ -2,7 +2,7 @@ export const PORT = 7000;
 export const BASE_URL = `http://localhost:${PORT}`;
 
 import { decode } from "jsonwebtoken";
-import { UserModel as UserSchema } from '../../';
+import { UsersModel as UserSchema } from 'users';
 import * as app from "../../express-sample/app";
 import { Server } from 'http';
 import { Document, Types } from "mongoose";

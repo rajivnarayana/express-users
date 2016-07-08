@@ -1,4 +1,7 @@
-spec
+typings.json
+tsconfig.json
+.vscode
+.gitignore
 express-sample
 *.ts
 *.js.map
