@@ -87,7 +87,19 @@ describe("Login", () => {
         let { response, body} = await post('/users/email_signup', {form: {email: 'john@webileapps.com', password: 'hello123'}});
         expect(response.statusCode).toBe(500);
         done();
-    })    
+    })
+
+    it('login the user signed up with email', async(done) => {
+        let {response,body} = await post(`/users/email_login`,{form:{email:'john@webileapps.com', password:'hello123'}});
+        expect(response.statusCode).toBe(200);
+        done();
+    })
+
+    it('login the user signed up with email', async(done) => {
+        let {response,body} = await post(`/users/email_login`,{form:{email:'john@webileapps.com', password:'hello'}});
+        expect(response.statusCode).toBe(500);
+        done();
+    })     
 
     it('Accessing /me should show my name', async (done) => {
         let { response, body } = await get('/users/me?access_token=' + accessToken);

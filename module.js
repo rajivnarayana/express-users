@@ -75,6 +75,15 @@ function signupWithEmail(email, password) {
     });
 }
 exports.signupWithEmail = signupWithEmail;
+function loginWithEmail(email, password) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let user = yield findOne({ email: email }, "+password");
+        if (!user || !(yield user.comparePassword(password)))
+            throw new Error('Invalid username or password');
+        return yield sign(user.id);
+    });
+}
+exports.loginWithEmail = loginWithEmail;
 function login(username, password) {
     return __awaiter(this, void 0, Promise, function* () {
         let userId = yield loginWithoutSign(username, password);

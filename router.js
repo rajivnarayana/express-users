@@ -66,6 +66,14 @@ router.post('/email_signup', (req, res, next) => __awaiter(this, void 0, void 0,
         next(error);
     }
 }));
+router.post('/email_login', (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        res.status(http_status_codes_1.OK).send(yield module_1.loginWithEmail(req.body.email, req.body.password));
+    }
+    catch (error) {
+        next(error);
+    }
+}));
 router.post('/login', (req, res, next) => __awaiter(this, void 0, void 0, function* () {
     try {
         res.status(http_status_codes_1.OK).send(yield module_1.login(req.body.username, req.body.password));

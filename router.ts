@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { count, signup, signupWithEmail, checkAvailability, read, login, renewAccessToken, findByIdAndUpdate} from './module';
+import { count, signup, signupWithEmail, loginWithEmail, checkAvailability, read, login, renewAccessToken, findByIdAndUpdate} from './module';
 import { OK } from 'http-status-codes';
 import * as bodyParser  from 'body-parser';
 
@@ -56,6 +56,14 @@ router.post('/signup', async (req, res, next) => {
 router.post('/email_signup', async (req, res, next) => {
     try {
         res.status(OK).send(await signupWithEmail(req.body.email, req.body.password));
+    } catch(error) {
+        next(error);
+    }
+})
+
+router.post('/email_login', async (req, res, next) => {
+    try {
+        res.status(OK).send(await loginWithEmail(req.body.email, req.body.password));
     } catch(error) {
         next(error);
     }
