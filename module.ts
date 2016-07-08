@@ -59,7 +59,12 @@ export async function signupWithEmail(email: string, password: string) : Promise
     let user: Document = await UserSchema.create({email: email, password: password});
     return await sign(user.id);        
 }
-
+export async function loginWithEmail(email: string,password:string) {
+    let user = await findOne({email:email}, "+password");
+    if (!user || !(await user.comparePassword(password)))
+        throw new Error('Invalid username or password');        
+    return await sign(user.id);
+}
 export async function login(username: string, password: string) : Promise<any> {
     let userId = await loginWithoutSign(username, password);
     return await sign(userId);
